@@ -393,32 +393,57 @@ void main() {
 // {'name': 'Ryan', 'marks': [70, 65, 75], 'section': 'A', 'rollNumber': 103},
 // ];
 
-  List<Map<String, dynamic>> studentDetails = [
-    {
-      'name': 'John',
-      'marks': [80, 75, 90],
-      'section': 'A',
-      'rollNumber': 101
-    },
-    {
-      'name': 'Emma',
-      'marks': [95, 92, 88],
-      'section': 'B',
-      'rollNumber': 102
-    },
-    {
-      'name': 'Ryan',
-      'marks': [70, 65, 75],
-      'section': 'A',
-      'rollNumber': 103
-    },
-  ];
+  // List<Map<String, dynamic>> studentDetails = [
+  //   {
+  //     'name': 'John',
+  //     'marks': [80, 75, 90],
+  //     'section': 'A',
+  //     'rollNumber': 101
+  //   },
+  //   {
+  //     'name': 'Ali',
+  //     'marks': [0, 15, 75],
+  //     'section': 'A',
+  //     'rollNumber': 103
+  //   },
+  //   {
+  //     'name': 'Emma',
+  //     'marks': [95, 92, 88],
+  //     'section': 'B',
+  //     'rollNumber': 102
+  //   },
+  //   {
+  //     'name': 'Ryan',
+  //     'marks': [70, 65, 75],
+  //     'section': 'A',
+  //     'rollNumber': 103
+  //   },
+  //   {
+  //     'name': 'Rohan',
+  //     'marks': [5, 50, 55],
+  //     'section': 'A',
+  //     'rollNumber': 103
+  //   },
+  // ];
 
-  for (var i = 0; i < studentDetails.length; i++) {
-    // dynamic res =
-    //     studentDetails[i]['marks'].reduce((val, element) => val += element);
+  // for (var student in studentDetails) {
+  //   List<int> marks = student['marks'].cast<int>();
+  //   int totalMarks = marks.reduce((ele, val) => ele + val);
+  //   num percenTage = totalMarks / 300 * 100;
+  //   String Grade = '';
+  //   if (percenTage >= 80) {
+  //     Grade = 'A';
+  //   } else if (percenTage >= 70) {
+  //     Grade = 'B';
+  //   } else if (percenTage >= 60) {
+  //     Grade = 'C';
+  //   } else if (percenTage >= 50) {
+  //     Grade = 'D';
+  //   } else {
+  //     Grade = 'Fail';
+  //   }
+  //   print(" Student Name is ${student['name']} and Grade is  $Grade ");
+  // }
 
-    // print('res $res');
-    print(studentDetails[i]['marks']);
-  }
+  //TODO ask for login from user 3 times
 }
