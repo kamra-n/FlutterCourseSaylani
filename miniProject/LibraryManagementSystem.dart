@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 String? adminEmail = 'kamran@admin.com';
@@ -12,8 +11,13 @@ List<Map<String, dynamic>> userDetails = [
 ];
 
 List<Map<String, dynamic>> bookDetails = [
-  {'bookname': 'flutter', 'instock': 7, 'Category': 'TT'}
+  {'bookname': 'flutter', 'instock': 7, 'Category': 'TT'},
+  {'bookname': 'JavaScript', 'instock': 0, 'Category': 'TT'},
+  {'bookname': 'Java', 'instock': 2, 'Category': 'TT'}
 ];
+
+List<Map<String, dynamic>> loggedInUser = [];
+
 void main() {
   startProgram();
 }
@@ -24,11 +28,13 @@ addBook() {
   print('==== Enter book name =====');
   String? bookName = stdin.readLineSync();
   print('==== Enter Stock =====');
-  String? inStock = stdin.readLineSync();
+  String? inStock = stdin.readLineSync()!;
   print('==== Enter Category =====');
   String? Category = stdin.readLineSync();
+
+  int stock = int.parse(inStock);
   bookDetails
-      .add({'bookname': bookName, 'instock': inStock, 'Category': Category});
+      .add({'bookname': bookName, 'instock': stock, 'Category': Category});
 
   print('Book Added Successfully');
   adminMainFunction();
@@ -201,15 +207,20 @@ void startProgram() {
     print('==== Enter user password =====');
     String userInputPassword = stdin.readLineSync()!;
     bool found = false;
-    for (var value in userDetails) {
-      var user = value['user'];
-      var password = value['password'];
-      if (user == userInput && password == userInputPassword) {
-        print('hello ${user}');
+    userDetails.asMap().forEach((key, value) {
+      if (value['user'] == userInput &&
+          value['password'] == userInputPassword) {
+        loggedInUser.add({
+          'username': value['user'],
+          'password': value['password'],
+          'id': key
+        });
+        // print('loggedInUser ${loggedInUser}');
+        userMainFunction();
         found = true;
-        break;
       }
-    }
+    });
+
     if (!found) {
       print('user with these credentials not found');
     }
@@ -225,8 +236,7 @@ adminMainFunction() {
   print("""Select any option you wanted to perform 👌
         \n\ 1- Add user  \n\ 2- Delete User \n\ 3- Update User \n\ 4- View User 
         \n\ 5- Add Book  \n\ 6- View Book \n\ 7- Delete Book \n\ 8- update Book
-        \n\ 9- see Books in stock  \n\ 10- seeUsersOccupiedBooks 
-        11- Logout """);
+        \n\ 9- see Books in stock  \n\ 10- seeUsersOccupiedBooks \n\ 11- Logout """);
 
   String? adminOptionSelect = stdin.readLineSync();
 
@@ -267,10 +277,91 @@ adminMainFunction() {
       startProgram();
       break;
     default:
-      startProgram();
+      print('Please Select Valid Option');
+      adminMainFunction();
   }
 }
 
 // User work
+seeAvailableBook() {
+  List<Map<String, dynamic>> filteredBooks =
+      bookDetails.where((book) => book['instock'] > 0).toList();
 
+  print('filterBooks $filteredBooks');
 
+  if (filteredBooks.isNotEmpty) {
+    print("Books found:");
+    for (var book in filteredBooks) {
+      print("""
+==============================
+Book name is ${book['bookname']}
+Book Instock ${book['instock']}
+      """);
+    }
+    userMainFunction();
+  } else {
+    print("Book not found");
+    userMainFunction();
+  }
+}
+
+seeBookViaCategory() {
+  print('Enter Category Name to Search Books Via Category');
+  String? searchViaCat = stdin.readLineSync();
+
+  List<Map<String, dynamic>> filteredBooks =
+      bookDetails.where((book) => book['Category'] == searchViaCat).toList();
+
+  if (filteredBooks.isNotEmpty) {
+    print("Books found:");
+    for (var book in filteredBooks) {
+      print("""
+==============================
+Book name is ${book['bookname']}
+Book Category ${book['Category']}
+      """);
+    }
+    userMainFunction();
+  } else {
+    print("Book not found");
+    userMainFunction();
+  }
+}
+
+addBookToFavorite() {}
+
+requestANewBook() {}
+
+seeBooksInUse() {}
+
+userMainFunction() {
+  print("""Select any option you wanted to perform 👌
+        \n\ 1- See Books  \n\ 2- See Books Via Category \n\ 3- Add Book to Favorite \n\ 4- Request a new Book 
+        \n\ 5- see Books in use  \n\ 6- Logout""");
+
+  String? userOptionSelect = stdin.readLineSync();
+
+  switch (userOptionSelect) {
+    case '1':
+      seeAvailableBook();
+      break;
+    case '2':
+      seeBookViaCategory();
+      break;
+    case '3':
+      addBookToFavorite();
+      break;
+    case '4':
+      requestANewBook();
+      break;
+    case '5':
+      seeBooksInUse();
+      break;
+    case '6':
+      startProgram();
+      break;
+    default:
+      print('Please Select Valid Option');
+      userMainFunction();
+  }
+}
